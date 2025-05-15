@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Desain Manov - Landing Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+      if (
+        localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              // Light mode colors
+              light: {
+                bg: "#f8fafc",
+                card: "#ffffff",
+                text: "#1e293b",
+                border: "#e2e8f0",
+                accent: "#0d9488",
+                accentHover: "#0f766e",
+              },
+              // Dark mode colors
+              dark: {
+                bg: "#1a1a1a",
+                card: "#2d2d2d",
+                text: "#e5e5e5",
+                border: "#404040",
+                accent: "#14b8a6",
+                accentHover: "#0d9488",
+              },
+            },
+            boxShadow: {
+              soft: "0 2px 4px rgba(0,0,0,0.05)",
+              hover: "0 4px 6px rgba(0,0,0,0.1)",
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @tailwind base;
+      @tailwind components;
+      @tailwind utilities;
+
+      @layer components {
+        /* Base styles */
+        body {
+          @apply bg-gray-50 text-gray-800 dark:bg-dark-bg dark:text-dark-text;
+        }
+
+        /* Navigation */
+        .nav-link {
+          @apply px-4 py-2 text-gray-600 hover:text-teal-600 dark:text-gray-300 dark:hover:text-teal-400 transition-colors duration-200;
+        }
+        .nav-link.active {
+          @apply text-teal-600 dark:text-teal-400 font-medium;
+        }
+
+        /* Cards */
+        .card {
+          @apply bg-white dark:bg-dark-card rounded-xl shadow-sm hover:shadow-md transition-all duration-300;
+        }
+        .card-hover {
+          @apply hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-gray-800/50;
+        }
+
+        /* Buttons */
+        .btn {
+          @apply px-6 py-3 rounded-full font-medium transition-all duration-200 shadow-md hover:shadow-lg;
+        }
+        .btn-primary {
+          @apply bg-teal-500 text-white hover:bg-teal-600 dark:bg-teal-600 dark:hover:bg-teal-700;
+        }
+        .btn-secondary {
+          @apply bg-white text-gray-800 hover:bg-gray-50 dark:bg-dark-card dark:text-dark-text dark:hover:bg-dark-bg;
+        }
+
+        /* Sections */
+        .section-title {
+          @apply text-3xl font-bold text-gray-800 dark:text-white mb-8;
+        }
+        .section-subtitle {
+          @apply text-xl text-gray-600 dark:text-gray-300 mb-12;
+        }
+
+        /* Gradients */
+        .gradient-bg {
+          @apply bg-gradient-to-br from-blue-600 to-teal-500 dark:from-gray-900 dark:to-blue-900;
+        }
+
+        /* Content blocks */
+        .content-block {
+          @apply bg-white dark:bg-dark-card p-8 rounded-xl shadow-sm;
+        }
+        .content-title {
+          @apply text-2xl font-semibold text-gray-800 dark:text-white mb-4;
+        }
+        .content-text {
+          @apply text-gray-600 dark:text-gray-300 leading-relaxed;
+        }
+
+        /* Lists */
+        .list-item {
+          @apply flex items-start space-x-3 text-gray-600 dark:text-gray-300;
+        }
+        .list-icon {
+          @apply w-5 h-5 text-teal-500 dark:text-teal-400 flex-shrink-0 mt-1;
+        }
+
+        /* Quiz and Exercise elements */
+        .question-card {
+          @apply bg-white dark:bg-dark-card p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-200;
+        }
+        .option-item {
+          @apply flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-teal-50 dark:hover:bg-teal-900/30 cursor-pointer transition-colors duration-200;
+        }
+        .option-marker {
+          @apply w-6 h-6 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-3 flex items-center justify-center;
+        }
+        .option-text {
+          @apply text-gray-700 dark:text-gray-200;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+          <div class="text-2xl font-bold text-teal-600 dark:text-teal-400">
+            Belajar Fisika!
+          </div>
+          <div class="hidden md:flex items-center space-x-4">
+            <a href="#goals" class="nav-link">Goals</a>
+            <a href="#video" class="nav-link">Videos</a>
+            <a href="#materi" class="nav-link">Materi</a>
+            <a href="#latihan" class="nav-link">Latihan</a>
+            <a href="#quiz" class="nav-link">Quiz</a>
+            <!-- Theme Toggle Button -->
+            <button
+              id="theme-toggle"
+              class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400"
+              aria-label="Toggle dark mode"
+            >
+              <!-- Sun icon -->
+              <svg
+                id="theme-toggle-light-icon"
+                class="w-6 h-6 text-gray-600 dark:text-gray-300 hidden"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                ></path>
+              </svg>
+              <!-- Moon icon -->
+              <svg
+                id="theme-toggle-dark-icon"
+                class="w-6 h-6 text-gray-600 dark:text-gray-300 hidden"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          <!-- Hamburger for mobile -->
+          <button
+            id="mobile-menu-btn"
+            class="md:hidden text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:focus:ring-teal-400"
+            aria-label="Open menu"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+    <!-- Mobile Menu (hidden by default) -->
+    <div
+      id="mobile-menu"
+      class="md:hidden fixed top-16 left-0 w-full bg-white dark:bg-gray-900 shadow-lg z-40 hidden"
+    >
+      <a
+        href="#goals"
+        class="block px-6 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+        >Goals</a
+      >
+      <a
+        href="#video"
+        class="block px-6 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+        >Videos</a
+      >
+      <a
+        href="#materi"
+        class="block px-6 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+        >Materi</a
+      >
+      <a
+        href="#latihan"
+        class="block px-6 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+        >Latihan</a
+      >
+      <a
+        href="#quiz"
+        class="block px-6 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+        >Quiz</a
+      >
+    </div>
+    <script>
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      mobileMenuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+    </script>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-16 md:py-24">
+      <div class="container mx-auto px-4 text-center">
+        <h1
+          class="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 md:mb-6 leading-tight animate-fade-in"
+        >
+          <span class="text-gray-800 dark:text-white drop-shadow-lg"
+            >Belajar</span
+          >
+          <span
+            class="bg-gradient-to-r from-blue-600 via-teal-400 to-emerald-400 bg-clip-text text-transparent dark:from-blue-400 dark:via-teal-300 dark:to-emerald-300 drop-shadow-lg"
+            >Fisika</span
+          >
+          <span class="text-gray-800 dark:text-white drop-shadow-lg"
+            >dengan</span
+          >
+          <span
+            class="bg-gradient-to-r from-teal-500 to-emerald-400 bg-clip-text text-transparent dark:from-teal-400 dark:to-emerald-300 drop-shadow-lg"
+            >Menyenangkan</span
+          >
+        </h1>
+        <p
+          class="text-base sm:text-lg md:text-xl mb-6 md:mb-10 max-w-xl md:max-w-2xl mx-auto text-gray-600 dark:text-gray-300 animate-fade-in delay-150"
+        >
+          Pelajari konsep dasar fisika melalui video interaktif, materi lengkap,
+          dan latihan soal yang menarik
+        </p>
+        <div
+          class="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in delay-300 w-full sm:w-auto"
+        >
+          <a
+            href="#materi"
+            class="w-full sm:w-auto bg-teal-500 text-white px-6 md:px-8 py-3 rounded-full font-medium hover:bg-teal-600 transition-colors duration-200 shadow-lg hover:shadow-xl text-base md:text-lg"
+            >Mulai Belajar</a
+          >
+          <a
+            href="#video"
+            class="w-full sm:w-auto bg-white text-gray-800 px-6 md:px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors duration-200 shadow-lg hover:shadow-xl text-base md:text-lg"
+            >Lihat Video</a
+          >
+        </div>
+      </div>
+    </section>
+    <style>
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fade-in {
+        animation: fade-in 1s cubic-bezier(0.4, 0, 0.2, 1) both;
+      }
+      .delay-150 {
+        animation-delay: 0.15s;
+      }
+      .delay-300 {
+        animation-delay: 0.3s;
+      }
+    </style>
+
+    <div class="container mx-auto px-2 sm:px-4 py-8 md:py-16">
+      <!-- Goals & Objectives Section -->
+      <section id="goals" class="mb-12 md:mb-20">
+        <div class="flex flex-col sm:flex-row items-center mb-6 md:mb-8">
+          <div class="w-12 h-1 bg-teal-500 rounded-full"></div>
+          <h2
+            class="ml-0 sm:ml-4 text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white mt-4 sm:mt-0"
+          >
+            Goals & Objectives
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          <div
+            class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-md card-hover"
+          >
+            <h3
+              class="text-2xl font-semibold text-gray-800 dark:text-white mb-6"
+            >
+              Tujuan Pembelajaran
+            </h3>
+            <ul class="space-y-4">
+              <li class="flex items-start">
+                <div
+                  class="w-8 h-8 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center mr-4 flex-shrink-0"
+                >
+                  <svg
+                    class="w-5 h-5 text-teal-600 dark:text-teal-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                </div>
+                <span class="text-gray-600 dark:text-gray-300"
+                  >Memahami konsep dasar fisika mengenai gaya, gerak, energi,
+                  dan tegangan.</span
+                >
+              </li>
+              <li class="flex items-start">
+                <div
+                  class="w-8 h-8 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center mr-4 flex-shrink-0"
+                >
+                  <svg
+                    class="w-5 h-5 text-teal-600 dark:text-teal-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                </div>
+                <span class="text-gray-600 dark:text-gray-300"
+                  >Menonton video penjelasan materi untuk memperkuat
+                  pemahaman.</span
+                >
+              </li>
+              <li class="flex items-start">
+                <div
+                  class="w-8 h-8 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center mr-4 flex-shrink-0"
+                >
+                  <svg
+                    class="w-5 h-5 text-teal-600 dark:text-teal-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                </div>
+                <span class="text-gray-600 dark:text-gray-300"
+                  >Mengerjakan latihan soal untuk menguji pengetahuan secara
+                  mandiri.</span
+                >
+              </li>
+              <li class="flex items-start">
+                <div
+                  class="w-8 h-8 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center mr-4 flex-shrink-0"
+                >
+                  <svg
+                    class="w-5 h-5 text-teal-600 dark:text-teal-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                </div>
+                <span class="text-gray-600 dark:text-gray-300"
+                  >Menjawab pertanyaan quiz terbuka untuk refleksi konsep.</span
+                >
+              </li>
+            </ul>
+          </div>
+          <div
+            class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-md card-hover"
+          >
+            <h3
+              class="text-2xl font-semibold text-gray-800 dark:text-white mb-6"
+            >
+              Metode Pembelajaran
+            </h3>
+            <div class="space-y-6">
+              <div
+                class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg"
+              >
+                <div
+                  class="w-12 h-12 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center mr-4"
+                >
+                  <svg
+                    class="w-6 h-6 text-teal-600 dark:text-teal-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                    ></path>
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800 dark:text-white">
+                    Video Pembelajaran
+                  </h4>
+                  <p class="text-gray-600 dark:text-gray-300">
+                    Materi disampaikan melalui video interaktif
+                  </p>
+                </div>
+              </div>
+              <div
+                class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg"
+              >
+                <div
+                  class="w-12 h-12 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center mr-4"
+                >
+                  <svg
+                    class="w-6 h-6 text-teal-600 dark:text-teal-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                    ></path>
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800 dark:text-white">
+                    Latihan Soal
+                  </h4>
+                  <p class="text-gray-600 dark:text-gray-300">
+                    Praktik langsung dengan soal-soal latihan
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Video Explanation Section -->
+      <section id="video" class="mb-12 md:mb-20">
+        <div class="flex flex-col sm:flex-row items-center mb-6 md:mb-8">
+          <div class="w-12 h-1 bg-teal-500 rounded-full"></div>
+          <h2
+            class="ml-0 sm:ml-4 text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white mt-4 sm:mt-0"
+          >
+            Video Penjelasan Materi
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          <div class="w-full h-0 relative" style="padding-bottom: 56.25%">
+            <iframe
+              class="absolute top-0 left-0 w-full h-full"
+              src="https://www.youtube.com/embed/-whzxEfRcmQ"
+              title="Video Penjelasan 1"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            >
+            </iframe>
+          </div>
+          <div class="w-full h-0 relative" style="padding-bottom: 56.25%">
+            <iframe
+              class="absolute top-0 left-0 w-full h-full"
+              src="https://www.youtube.com/embed/QDfEyfsZIBw"
+              title="Video Penjelasan 2"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            >
+            </iframe>
+          </div>
+          <div class="w-full h-0 relative" style="padding-bottom: 56.25%">
+            <iframe
+              class="absolute top-0 left-0 w-full h-full"
+              src="https://www.youtube.com/embed/jhaWIopRmLg"
+              title="Video Penjelasan 3"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            >
+            </iframe>
+          </div>
+          <div class="w-full h-0 relative" style="padding-bottom: 56.25%">
+            <iframe
+              class="absolute top-0 left-0 w-full h-full"
+              src="https://www.youtube.com/embed/ngJgEHjBtjw"
+              title="Video Penjelasan 4"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            >
+            </iframe>
+          </div>
+          <div
+            class="w-full h-0 relative md:col-span-2"
+            style="padding-bottom: 56.25%"
+          >
+            <iframe
+              class="absolute top-0 left-0 w-full h-full"
+              src="https://www.youtube.com/embed/Ys0qe5PXFx4"
+              title="Video Penjelasan 5"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            >
+            </iframe>
+          </div>
+        </div>
+      </section>
+
+      <!-- Materi Penjelasan Section -->
+      <section id="materi" class="mb-12 md:mb-20">
+        <div class="flex flex-col sm:flex-row items-center mb-6 md:mb-8">
+          <div class="w-12 h-1 bg-teal-500 rounded-full"></div>
+          <h2
+            class="ml-0 sm:ml-4 text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white mt-4 sm:mt-0"
+          >
+            Materi Penjelasan
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          <!-- Gaya Card -->
+          <div
+            class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-md card-hover"
+          >
+            <div class="flex items-center mb-6">
+              <div
+                class="w-12 h-12 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center mr-4"
+              >
+                <svg
+                  class="w-6 h-6 text-teal-600 dark:text-teal-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">
+                Gaya
+              </h3>
+            </div>
+            <div class="space-y-4">
+              <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                Gaya adalah tarikan atau dorongan yang dapat menyebabkan suatu
+                benda mengalami perubahan posisi, bentuk, atau kecepatan. Dalam
+                ilmu fisika, gaya dilambangkan dengan huruf F (dari bahasa
+                Inggris <em>Force</em>) dan diukur dalam satuan Newton (N).
+              </p>
+              <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 dark:text-white mb-2">
+                  Dampak Gaya:
+                </h4>
+                <ul class="space-y-2">
+                  <li
+                    class="flex items-center text-gray-600 dark:text-gray-300"
+                  >
+                    <svg
+                      class="w-5 h-5 text-teal-500 dark:text-teal-400 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"
+                      ></path>
+                    </svg>
+                    Benda diam menjadi bergerak
+                  </li>
+                  <li
+                    class="flex items-center text-gray-600 dark:text-gray-300"
+                  >
+                    <svg
+                      class="w-5 h-5 text-teal-500 dark:text-teal-400 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"
+                      ></path>
+                    </svg>
+                    Benda bergerak menjadi diam
+                  </li>
+                  <li
+                    class="flex items-center text-gray-600 dark:text-gray-300"
+                  >
+                    <svg
+                      class="w-5 h-5 text-teal-500 dark:text-teal-400 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"
+                      ></path>
+                    </svg>
+                    Perubahan arah gerak benda
+                  </li>
+                  <li
+                    class="flex items-center text-gray-600 dark:text-gray-300"
+                  >
+                    <svg
+                      class="w-5 h-5 text-teal-500 dark:text-teal-400 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"
+                      ></path>
+                    </svg>
+                    Perubahan bentuk benda
+                  </li>
+                </ul>
+              </div>
+              <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 dark:text-white mb-2">
+                  Jenis-jenis Gaya:
+                </h4>
+                <div class="grid grid-cols-2 gap-3">
+                  <div
+                    class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm"
+                  >
+                    <span class="font-medium text-teal-600 dark:text-teal-400"
+                      >Gaya Gravitasi</span
+                    >
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
+                      Gaya tarik bumi terhadap benda
+                    </p>
+                  </div>
+                  <div
+                    class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm"
+                  >
+                    <span class="font-medium text-teal-600 dark:text-teal-400"
+                      >Gaya Otot</span
+                    >
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
+                      Gaya dari kerja otot manusia/hewan
+                    </p>
+                  </div>
+                  <div
+                    class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm"
+                  >
+                    <span class="font-medium text-teal-600 dark:text-teal-400"
+                      >Gaya Gesek</span
+                    >
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
+                      Gaya yang menghambat gerakan
+                    </p>
+                  </div>
+                  <div
+                    class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm"
+                  >
+                    <span class="font-medium text-teal-600 dark:text-teal-400"
+                      >Gaya Magnet</span
+                    >
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
+                      Gaya tarik/tolak magnet
+                    </p>
+                  </div>
+                  <div
+                    class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm"
+                  >
+                    <span class="font-medium text-teal-600 dark:text-teal-400"
+                      >Gaya Listrik</span
+                    >
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
+                      Gaya dari muatan listrik
+                    </p>
+                  </div>
+                  <div
+                    class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm"
+                  >
+                    <span class="font-medium text-teal-600 dark:text-teal-400"
+                      >Gaya Pegas</span
+                    >
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
+                      Gaya dari pegas yang ditarik
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gerak Card -->
+          <div
+            class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-md card-hover"
+          >
+            <div class="flex items-center mb-6">
+              <div
+                class="w-12 h-12 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center mr-4"
+              >
+                <svg
+                  class="w-6 h-6 text-teal-600 dark:text-teal-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                  ></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">
+                Gerak
+              </h3>
+            </div>
+            <div class="space-y-4">
+              <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                Gerak adalah perpindahan posisi suatu benda dari satu tempat ke
+                tempat lain dalam selang waktu tertentu. Dalam fisika, gerak
+                bersifat relatif, artinya tergantung pada titik acuan yang
+                digunakan untuk mengamatinya.
+              </p>
+              <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 dark:text-white mb-2">
+                  Ciri-ciri Gerak:
+                </h4>
+                <ul class="space-y-2">
+                  <li
+                    class="flex items-center text-gray-600 dark:text-gray-300"
+                  >
+                    <svg
+                      class="w-5 h-5 text-teal-500 dark:text-teal-400 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"
+                      ></path>
+                    </svg>
+                    Ada perubahan posisi benda terhadap titik acuan
+                  </li>
+                  <li
+                    class="flex items-center text-gray-600 dark:text-gray-300"
+                  >
+                    <svg
+                      class="w-5 h-5 text-teal-500 dark:text-teal-400 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"
+                      ></path>
+                    </svg>
+                    Terjadi dalam jangka waktu tertentu
+                  </li>
+                </ul>
+              </div>
+              <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 dark:text-white mb-2">
+                  Jenis-jenis Gerak:
+                </h4>
+                <div class="grid grid-cols-2 gap-3">
+                  <div
+                    class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm"
+                  >
+                    <span class="font-medium text-teal-600 dark:text-teal-400"
+                      >Gerak Lurus</span
+                    >
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
+                      Gerak dalam lintasan lurus
+                    </p>
+                  </div>
+                  <div
+                    class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm"
+                  >
+                    <span class="font-medium text-teal-600 dark:text-teal-400"
+                      >Gerak Melengkung</span
+                    >
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
+                      Gerak dalam lintasan melengkung
+                    </p>
+                  </div>
+                  <div
+                    class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm"
+                  >
+                    <span class="font-medium text-teal-600 dark:text-teal-400"
+                      >Gerak Berubah Beraturan</span
+                    >
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
+                      Kecepatan berubah secara tetap
+                    </p>
+                  </div>
+                  <div
+                    class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm"
+                  >
+                    <span class="font-medium text-teal-600 dark:text-teal-400"
+                      >Gerak Lurus Beraturan</span
+                    >
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
+                      Gerak lurus dengan kecepatan tetap
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Energi Card -->
+          <div
+            class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-md card-hover"
+          >
+            <div class="flex items-center mb-6">
+              <div
+                class="w-12 h-12 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center mr-4"
+              >
+                <svg
+                  class="w-6 h-6 text-teal-600 dark:text-teal-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">
+                Energi
+              </h3>
+            </div>
+            <div class="space-y-4">
+              <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                Energi adalah kemampuan untuk melakukan usaha atau kerja. Energi
+                dapat berupa energi kinetik, energi potensial, energi panas, dan
+                bentuk lainnya. Dalam ilmu fisika, energi diukur dalam satuan
+                joule (J).
+              </p>
+              <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 dark:text-white mb-2">
+                  Contoh Energi:
+                </h4>
+                <div class="grid grid-cols-2 gap-3">
+                  <div
+                    class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm"
+                  >
+                    <span class="font-medium text-teal-600 dark:text-teal-400"
+                      >Energi Kinetik</span
+                    >
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
+                      Energi pada benda yang bergerak
+                    </p>
+                  </div>
+                  <div
+                    class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm"
+                  >
+                    <span class="font-medium text-teal-600 dark:text-teal-400"
+                      >Energi Potensial</span
+                    >
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
+                      Energi pada pegas yang ditarik
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tegangan Card -->
+          <div
+            class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-md card-hover"
+          >
+            <div class="flex items-center mb-6">
+              <div
+                class="w-12 h-12 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center mr-4"
+              >
+                <svg
+                  class="w-6 h-6 text-teal-600 dark:text-teal-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">
+                Tegangan
+              </h3>
+            </div>
+            <div class="space-y-4">
+              <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                Tegangan dalam konteks fisika sering mengacu pada gaya yang
+                bekerja pada suatu benda yang ditarik atau diregangkan. Secara
+                mekanik, tegangan dapat diartikan sebagai gaya per satuan luas
+                pada permukaan benda, dan diukur dalam satuan Newton per meter
+                persegi (Pa).
+              </p>
+              <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 dark:text-white mb-2">
+                  Contoh Tegangan:
+                </h4>
+                <div class="grid grid-cols-2 gap-3">
+                  <div
+                    class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm"
+                  >
+                    <span class="font-medium text-teal-600 dark:text-teal-400"
+                      >Tegangan pada Kawat</span
+                    >
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
+                      Tegangan saat kawat ditarik
+                    </p>
+                  </div>
+                  <div
+                    class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm"
+                  >
+                    <span class="font-medium text-teal-600 dark:text-teal-400"
+                      >Tegangan pada Pegas</span
+                    >
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
+                      Tegangan saat pegas diregangkan
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Latihan Soal Section -->
+      <section id="latihan" class="mb-16 md:mb-24">
+        <div class="flex flex-col sm:flex-row items-center mb-6 md:mb-8">
+          <div class="w-12 h-1 bg-teal-500 rounded-full"></div>
+          <h2
+            class="ml-0 sm:ml-4 text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white mt-4 sm:mt-0"
+          >
+            Latihan Soal
+          </h2>
+        </div>
+
+        <div class="space-y-6 md:space-y-8">
+          <!-- Question 1 -->
+          <div
+            class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
+          >
+            <div class="flex items-start gap-4 md:gap-6">
+              <div class="flex-shrink-0">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-50 dark:from-teal-900 dark:to-teal-800 rounded-full flex items-center justify-center shadow-inner"
+                >
+                  <span
+                    class="text-teal-600 dark:text-teal-300 font-bold text-xl"
+                    >1</span
+                  >
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3
+                  class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-100 leading-relaxed"
+                >
+                  Gaya dapat menyebabkan perubahan pada suatu benda. Manakah
+                  dari pernyataan berikut yang bukan merupakan akibat dari
+                  adanya gaya?
+                </h3>
+                <div class="mt-4 space-y-3">
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >A</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Benda diam menjadi bergerak</span
+                    >
+                  </div>
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >B</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Perubahan warna benda</span
+                    >
+                  </div>
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >C</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Perubahan arah gerak benda</span
+                    >
+                  </div>
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >D</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Perubahan bentuk benda</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Question 2 -->
+          <div
+            class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
+          >
+            <div class="flex items-start gap-4 md:gap-6">
+              <div class="flex-shrink-0">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-50 dark:from-teal-900 dark:to-teal-800 rounded-full flex items-center justify-center shadow-inner"
+                >
+                  <span
+                    class="text-teal-600 dark:text-teal-300 font-bold text-xl"
+                    >2</span
+                  >
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3
+                  class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-100 leading-relaxed"
+                >
+                  Gerak suatu benda dikatakan terjadi jika...
+                </h3>
+                <div class="mt-4 space-y-3">
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >A</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Benda berubah warna</span
+                    >
+                  </div>
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >B</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Benda berubah bentuk</span
+                    >
+                  </div>
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >C</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Ada perubahan posisi terhadap titik acuan dalam waktu
+                      tertentu</span
+                    >
+                  </div>
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >D</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Benda bertambah massa</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Question 3 -->
+          <div
+            class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
+          >
+            <div class="flex items-start gap-4 md:gap-6">
+              <div class="flex-shrink-0">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-50 dark:from-teal-900 dark:to-teal-800 rounded-full flex items-center justify-center shadow-inner"
+                >
+                  <span
+                    class="text-teal-600 dark:text-teal-300 font-bold text-xl"
+                    >3</span
+                  >
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3
+                  class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-100 leading-relaxed"
+                >
+                  Sebuah bola dilempar ke atas dan kembali jatuh ke tanah. Gaya
+                  apa yang mempengaruhi gerak bola tersebut?
+                </h3>
+                <div class="mt-4 space-y-3">
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >A</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Gaya gesek</span
+                    >
+                  </div>
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >B</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Gaya gravitasi</span
+                    >
+                  </div>
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >C</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Gaya otot</span
+                    >
+                  </div>
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >D</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Gaya magnet</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Question 4 -->
+          <div
+            class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
+          >
+            <div class="flex items-start gap-4 md:gap-6">
+              <div class="flex-shrink-0">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-50 dark:from-teal-900 dark:to-teal-800 rounded-full flex items-center justify-center shadow-inner"
+                >
+                  <span
+                    class="text-teal-600 dark:text-teal-300 font-bold text-xl"
+                    >4</span
+                  >
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3
+                  class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-100 leading-relaxed"
+                >
+                  Apa yang terjadi jika gaya yang diberikan pada benda lebih
+                  besar dari gaya geseknya?
+                </h3>
+                <div class="mt-4 space-y-3">
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >A</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Benda tetap diam</span
+                    >
+                  </div>
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >B</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Benda bergerak</span
+                    >
+                  </div>
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >C</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Benda berubah warna</span
+                    >
+                  </div>
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >D</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Benda bertambah massa</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Question 5 -->
+          <div
+            class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
+          >
+            <div class="flex items-start gap-4 md:gap-6">
+              <div class="flex-shrink-0">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-50 dark:from-teal-900 dark:to-teal-800 rounded-full flex items-center justify-center shadow-inner"
+                >
+                  <span
+                    class="text-teal-600 dark:text-teal-300 font-bold text-xl"
+                    >5</span
+                  >
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3
+                  class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-100 leading-relaxed"
+                >
+                  Manakah dari berikut ini yang merupakan contoh gaya
+                  non-kontak?
+                </h3>
+                <div class="mt-4 space-y-3">
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >A</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Gaya otot saat mendorong meja</span
+                    >
+                  </div>
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >B</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Gaya gesek pada rem sepeda</span
+                    >
+                  </div>
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >C</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Gaya pegas pada ketapel</span
+                    >
+                  </div>
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >D</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Gaya magnet pada magnet menarik paku</span
+                    >
+                  </div>
+                  <div
+                    class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 cursor-pointer transition-colors duration-200 group"
+                  >
+                    <div
+                      class="w-7 h-7 border-2 border-teal-500 dark:border-teal-400 rounded-full mr-4 flex items-center justify-center flex-shrink-0 group-hover:bg-teal-500 dark:group-hover:bg-teal-600 transition-colors"
+                    >
+                      <span
+                        class="text-teal-600 dark:text-teal-400 font-medium group-hover:text-white transition-colors"
+                        >E</span
+                      >
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200"
+                      >Gaya dorong saat menendang bola</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Submit Button -->
+          <div class="flex justify-center mt-8 md:mt-10">
+            <button
+              class="w-full sm:w-auto bg-gradient-to-r from-teal-500 to-teal-600 dark:from-teal-600 dark:to-teal-700 text-white px-8 md:px-10 py-4 rounded-full font-semibold hover:from-teal-600 hover:to-teal-700 dark:hover:from-teal-700 dark:hover:to-teal-800 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center text-lg transform hover:-translate-y-0.5"
+            >
+              <svg
+                class="w-6 h-6 mr-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                />
+              </svg>
+              Periksa Jawaban
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quiz Section -->
+      <section id="quiz" class="mb-16 md:mb-24">
+        <div class="flex flex-col sm:flex-row items-center mb-6 md:mb-8">
+          <div class="w-12 h-1 bg-teal-500 rounded-full"></div>
+          <h2
+            class="ml-0 sm:ml-4 text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white mt-4 sm:mt-0"
+          >
+            Quiz
+          </h2>
+        </div>
+
+        <div class="space-y-6 md:space-y-8">
+          <!-- Question 1 -->
+          <div
+            class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
+          >
+            <div class="flex items-start gap-4 md:gap-6">
+              <div class="flex-shrink-0">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-50 dark:from-teal-900 dark:to-teal-800 rounded-full flex items-center justify-center shadow-inner"
+                >
+                  <span
+                    class="text-teal-600 dark:text-teal-300 font-bold text-xl"
+                    >1</span
+                  >
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3
+                  class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-100 leading-relaxed"
+                >
+                  Apa yang dimaksud dengan gaya dalam fisika dan sebutkan satu
+                  contoh penerapannya dalam kehidupan sehari-hari!
+                </h3>
+                <div
+                  class="mt-6 bg-gradient-to-r from-teal-50 to-gray-50 dark:from-gray-700 dark:to-gray-800 p-5 rounded-xl border border-teal-100 dark:border-gray-600"
+                >
+                  <div class="flex items-start">
+                    <div class="flex-shrink-0 mt-1">
+                      <svg
+                        class="w-5 h-5 text-teal-500 dark:text-teal-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </div>
+                    <div class="ml-3">
+                      <p class="text-gray-600 dark:text-gray-300 font-medium">
+                        Tips: Jelaskan pengertian gaya secara sederhana dan
+                        berikan contoh konkret yang mudah dipahami.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-6">
+                  <textarea
+                    class="w-full h-32 p-4 bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 dark:focus:ring-teal-500 dark:focus:border-teal-500 transition-colors duration-200"
+                    placeholder="Tulis jawabanmu di sini..."
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Question 2 -->
+          <div
+            class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
+          >
+            <div class="flex items-start gap-4 md:gap-6">
+              <div class="flex-shrink-0">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-50 dark:from-teal-900 dark:to-teal-800 rounded-full flex items-center justify-center shadow-inner"
+                >
+                  <span
+                    class="text-teal-600 dark:text-teal-300 font-bold text-xl"
+                    >2</span
+                  >
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3
+                  class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-100 leading-relaxed"
+                >
+                  Mengapa bola yang dilempar ke atas akan jatuh kembali ke
+                  bawah?
+                </h3>
+                <div
+                  class="mt-6 bg-gradient-to-r from-teal-50 to-gray-50 dark:from-gray-700 dark:to-gray-800 p-5 rounded-xl border border-teal-100 dark:border-gray-600"
+                >
+                  <div class="flex items-start">
+                    <div class="flex-shrink-0 mt-1">
+                      <svg
+                        class="w-5 h-5 text-teal-500 dark:text-teal-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </div>
+                    <div class="ml-3">
+                      <p class="text-gray-600 dark:text-gray-300 font-medium">
+                        Tips: Jelaskan konsep gaya gravitasi dan bagaimana
+                        pengaruhnya terhadap gerak benda.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-6">
+                  <textarea
+                    class="w-full h-32 p-4 bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 dark:focus:ring-teal-500 dark:focus:border-teal-500 transition-colors duration-200"
+                    placeholder="Tulis jawabanmu di sini..."
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Question 3 -->
+          <div
+            class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
+          >
+            <div class="flex items-start gap-4 md:gap-6">
+              <div class="flex-shrink-0">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-50 dark:from-teal-900 dark:to-teal-800 rounded-full flex items-center justify-center shadow-inner"
+                >
+                  <span
+                    class="text-teal-600 dark:text-teal-300 font-bold text-xl"
+                    >3</span
+                  >
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3
+                  class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-100 leading-relaxed"
+                >
+                  Jelaskan perbedaan antara gaya kontak dan gaya non-kontak
+                  beserta contohnya!
+                </h3>
+                <div
+                  class="mt-6 bg-gradient-to-r from-teal-50 to-gray-50 dark:from-gray-700 dark:to-gray-800 p-5 rounded-xl border border-teal-100 dark:border-gray-600"
+                >
+                  <div class="flex items-start">
+                    <div class="flex-shrink-0 mt-1">
+                      <svg
+                        class="w-5 h-5 text-teal-500 dark:text-teal-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </div>
+                    <div class="ml-3">
+                      <p class="text-gray-600 dark:text-gray-300 font-medium">
+                        Tips: Jelaskan pengertian gaya kontak dan non-kontak
+                        serta berikan masing-masing satu contoh.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-6">
+                  <textarea
+                    class="w-full h-32 p-4 bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 dark:focus:ring-teal-500 dark:focus:border-teal-500 transition-colors duration-200"
+                    placeholder="Tulis jawabanmu di sini..."
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Question 4 -->
+          <div
+            class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
+          >
+            <div class="flex items-start gap-4 md:gap-6">
+              <div class="flex-shrink-0">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-50 dark:from-teal-900 dark:to-teal-800 rounded-full flex items-center justify-center shadow-inner"
+                >
+                  <span
+                    class="text-teal-600 dark:text-teal-300 font-bold text-xl"
+                    >4</span
+                  >
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3
+                  class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-100 leading-relaxed"
+                >
+                  Jelaskan perbedaan antara gaya kontak dan gaya non-kontak
+                  beserta contohnya!
+                </h3>
+                <div
+                  class="mt-6 bg-gradient-to-r from-teal-50 to-gray-50 dark:from-gray-700 dark:to-gray-800 p-5 rounded-xl border border-teal-100 dark:border-gray-600"
+                >
+                  <div class="flex items-start">
+                    <div class="flex-shrink-0 mt-1">
+                      <svg
+                        class="w-5 h-5 text-teal-500 dark:text-teal-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </div>
+                    <div class="ml-3">
+                      <p class="text-gray-600 dark:text-gray-300 font-medium">
+                        Tips: Jelaskan pengertian gaya kontak dan non-kontak
+                        serta berikan masing-masing satu contoh.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-6">
+                  <textarea
+                    class="w-full h-32 p-4 bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 dark:focus:ring-teal-500 dark:focus:border-teal-500 transition-colors duration-200"
+                    placeholder="Tulis jawabanmu di sini..."
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Question 5 -->
+          <div
+            class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
+          >
+            <div class="flex items-start gap-4 md:gap-6">
+              <div class="flex-shrink-0">
+                <div
+                  class="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-50 dark:from-teal-900 dark:to-teal-800 rounded-full flex items-center justify-center shadow-inner"
+                >
+                  <span
+                    class="text-teal-600 dark:text-teal-300 font-bold text-xl"
+                    >5</span
+                  >
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3
+                  class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-100 leading-relaxed"
+                >
+                  Jelaskan perbedaan antara gaya kontak dan gaya non-kontak
+                  beserta contohnya!
+                </h3>
+                <div
+                  class="mt-6 bg-gradient-to-r from-teal-50 to-gray-50 dark:from-gray-700 dark:to-gray-800 p-5 rounded-xl border border-teal-100 dark:border-gray-600"
+                >
+                  <div class="flex items-start">
+                    <div class="flex-shrink-0 mt-1">
+                      <svg
+                        class="w-5 h-5 text-teal-500 dark:text-teal-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </div>
+                    <div class="ml-3">
+                      <p class="text-gray-600 dark:text-gray-300 font-medium">
+                        Tips: Jelaskan pengertian gaya kontak dan non-kontak
+                        serta berikan masing-masing satu contoh.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-6">
+                  <textarea
+                    class="w-full h-32 p-4 bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 dark:focus:ring-teal-500 dark:focus:border-teal-500 transition-colors duration-200"
+                    placeholder="Tulis jawabanmu di sini..."
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Submit Button -->
+          <div class="flex justify-center mt-8 md:mt-10">
+            <button
+              class="w-full sm:w-auto bg-gradient-to-r from-teal-500 to-teal-600 dark:from-teal-600 dark:to-teal-700 text-white px-8 md:px-10 py-4 rounded-full font-semibold hover:from-teal-600 hover:to-teal-700 dark:hover:from-teal-700 dark:hover:to-teal-800 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center text-lg transform hover:-translate-y-0.5"
+            >
+              <svg
+                class="w-6 h-6 mr-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                />
+              </svg>
+              Kirim Jawaban
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-gray-950 text-white py-16">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-3 gap-12">
+          <div>
+            <h3 class="text-2xl font-bold text-teal-400 mb-6">
+              Belajar Fisika!
+            </h3>
+            <p class="text-gray-400 leading-relaxed">
+              Platform pembelajaran fisika interaktif untuk membantu siswa
+              memahami konsep dasar dengan lebih baik.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-6 text-white">Quick Links</h3>
+            <ul class="space-y-3">
+              <li>
+                <a
+                  href="#goals"
+                  class="text-gray-400 hover:text-teal-400 transition-colors"
+                  >Goals</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#video"
+                  class="text-gray-400 hover:text-teal-400 transition-colors"
+                  >Videos</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#materi"
+                  class="text-gray-400 hover:text-teal-400 transition-colors"
+                  >Materi</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#latihan"
+                  class="text-gray-400 hover:text-teal-400 transition-colors"
+                  >Latihan</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#quiz"
+                  class="text-gray-400 hover:text-teal-400 transition-colors"
+                  >Quiz</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-6 text-white">Contact</h3>
+            <ul class="space-y-3 text-gray-400">
+              <li class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-3 text-teal-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  ></path>
+                </svg>
+                info@belajar-fisika.com
+              </li>
+              <li class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-3 text-teal-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  ></path>
+                </svg>
+                +62 123 4567 890
+              </li>
+              <li class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-3 text-teal-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  ></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  ></path>
+                </svg>
+                Malang, Indonesia
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400"
+        >
+          <p>&copy; 2025 Belajar Fisika!. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Theme Toggle Script -->
+    <script>
+      const themeToggleBtn = document.getElementById("theme-toggle");
+      const themeToggleLightIcon = document.getElementById(
+        "theme-toggle-light-icon"
+      );
+      const themeToggleDarkIcon = document.getElementById(
+        "theme-toggle-dark-icon"
+      );
+
+      // Function to update theme and icons
+      function updateTheme(isDark) {
+        document.documentElement.classList.toggle("dark", isDark);
+        themeToggleLightIcon.classList.toggle("hidden", !isDark);
+        themeToggleDarkIcon.classList.toggle("hidden", isDark);
+        localStorage.theme = isDark ? "dark" : "light";
+      }
+
+      // Set initial icon state
+      const isDark = document.documentElement.classList.contains("dark");
+      updateTheme(isDark);
+
+      // Toggle theme on button click
+      themeToggleBtn.addEventListener("click", () => {
+        const isDark = document.documentElement.classList.contains("dark");
+        updateTheme(!isDark);
+      });
+
+      // Listen for system theme changes
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+          if (!("theme" in localStorage)) {
+            updateTheme(e.matches);
+          }
+        });
+    </script>
+  </body>
+</html>
